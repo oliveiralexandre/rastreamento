@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg bg-primary">
 </nav><div class="container">
  
-<h3>Editar > Cliente ({{$veiculo->marca}})</h3>   
+<h3>Editar > Veículo ({{$veiculo->placa}})</h3>   
   <div class="content">
     <div class="row">
       <div class="col-md-12">

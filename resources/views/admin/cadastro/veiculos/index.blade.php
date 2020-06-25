@@ -84,7 +84,7 @@
                 <div class="form-group">                    
                     <select name="clientes" id="clientes" class="form-control">
                          @foreach($clientes as $cliente)    
-                    <option value="{{ $cliente->id }}-{{ $cliente->nome }} - {{ $cliente->cpf }}">{{ $cliente->id }}-{{ $cliente->nome }} - {{ $cliente->cpf }}</option>
+                    <option value="{{ $cliente->nome }} - {{ $cliente->cpf }}">{{ $cliente->nome }} - {{ $cliente->cpf }}</option>
                          @endforeach
                     </select> 
                 </div>

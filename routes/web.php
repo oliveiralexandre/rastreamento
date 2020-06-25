@@ -28,6 +28,19 @@ Route::prefix('admin')
     Route::post('/cadastro/veiculos/atualizar/{id}',['as'=>'cadastro.veiculos.atualizar', 'uses'=>'VeiculoController@atualizar']);
     Route::get('/cadastro/veiculos/deletar/{id}',['as'=>'cadastro.veiculos.deletar', 'uses'=>'VeiculoController@deletar']);
 
+    /**
+     * Cobrança Dashboard
+     */
+    Route::get('/financeiro', 'FinanceiroController@index')->name('index');
+    /**
+     * Cobrança Dashboard
+     */
+    Route::get('/financeiro/mensalidade', 'MensalidadeController@index')->name('index');
+    Route::post('/financeiro/mensalidade/create', 'MensalidadeController@store');
+    Route::get('/financeiro/mensalidade/editar/{id}',['as'=>'financeiro.mensalidade.editar', 'uses'=>'MensalidadeController@editar']);
+    Route::post('/financeiro/mensalidade/atualizar/{id}',['as'=>'financeiro.mensalidade.atualizar', 'uses'=>'MensalidadeController@atualizar']);
+    Route::get('/financeiro/mensalidade/deletar/{id}',['as'=>'financeiro.mensalidade.deletar', 'uses'=>'MensalidadeController@deletar']);
+
 });
 
 
@@ -36,5 +49,5 @@ Auth::routes();
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('site.index');
 });
