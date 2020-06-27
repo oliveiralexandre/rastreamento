@@ -14,24 +14,37 @@ use App\Models\Status;
 
 class MensalidadeController extends Controller
 {
+    protected $request;
     private $repository;
 
     private $mensalidade;
     private $cliente;
     private $status;
+    private $totalpage = 5;
     
-    public function __construct(Mensalidade $mensalidade, Cliente $cliente, Status $status)
+    public function __construct(Request $request, Mensalidade $mensalidade, Cliente $cliente, Status $status)
     {
+        $this->request = $request;
         $this->cliente = $cliente;
         $this->mensalidade = $mensalidade;
+        $this->status = $status;
+        $this->repository = $mensalidade;
     }
 
     public function index(Cliente $cliente, Status $status)
     {
         $mensalidades = DB::table('mensalidades')->paginate(5);
         $clientes = DB::table('clientes')->get();
-        $status = DB::table('status')->get();        
+        $status = DB::table('status')->get();  
+              
         return view('admin.financeiro.mensalidade.index', compact('mensalidades', 'clientes', 'status'));
+    }
+    public function novo()
+    {
+        $mensalidades = DB::table('mensalidades')->paginate(5);
+        $clientes = DB::table('clientes')->get();
+        $status = DB::table('status')->get();        
+        return view('admin.financeiro.mensalidade.novo', compact('mensalidades', 'clientes', 'status'));
     }
     /**
      * Show the form for creating a new resource.
@@ -121,6 +134,18 @@ class MensalidadeController extends Controller
         Alert::success('Deletado com Sucesso!');
         return redirect()->action('Admin\MensalidadeController@index');
 
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+        $mensalidades = $this->repository->search($request->filter);
+
+        return view('admin.financeiro.mensalidade.index', [
+            'mensalidades' => $mensalidades,
+            'filters' => $filters,
+        ]);
     }
 
 }

@@ -8,8 +8,9 @@ Route::prefix('admin')
     /**
      * Home Dashboard
      */
+    
     Route::get('/', 'DashboardController@index')->name('admin.index');
-
+    
     /**
      * Clientes Dashboard
      */
@@ -35,11 +36,16 @@ Route::prefix('admin')
     /**
      * Cobrança Dashboard
      */
+    Route::any('/financeiro/mensalidade/search', 'MensalidadeController@search')->name('search');
+
     Route::get('/financeiro/mensalidade', 'MensalidadeController@index')->name('index');
+    Route::get('/financeiro/mensalidade/novo', 'MensalidadeController@novo')->name('novo');
     Route::post('/financeiro/mensalidade/create', 'MensalidadeController@store');
     Route::get('/financeiro/mensalidade/editar/{id}',['as'=>'financeiro.mensalidade.editar', 'uses'=>'MensalidadeController@editar']);
     Route::post('/financeiro/mensalidade/atualizar/{id}',['as'=>'financeiro.mensalidade.atualizar', 'uses'=>'MensalidadeController@atualizar']);
     Route::get('/financeiro/mensalidade/deletar/{id}',['as'=>'financeiro.mensalidade.deletar', 'uses'=>'MensalidadeController@deletar']);
+    
+    
 
 });
 
