@@ -15,7 +15,7 @@
                 {!! csrf_field() !!}
 
                 <div class="form-group has-feedback {{ $errors->has('valor') ? 'has-error' : '' }}">
-                    <input type="text" name="valor" class="form-control" value="{{ isset($mensalidade->valor) ? $mensalidade->valor : '' }}">
+                    <input disabled="disabled" type="text" name="valor" class="form-control" value="{{ isset($mensalidade->valor) ? $mensalidade->valor : '' }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('valor'))
                         <span class="help-block">
@@ -24,7 +24,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('vencimento') ? 'has-error' : '' }}">
-                    <input type="text" name="vencimento" class="form-control" value="{{ isset($mensalidade->vencimento) ? $mensalidade->vencimento : '' }}">
+                    <input disabled="disabled" type="text" name="vencimento" class="form-control" value="{{ isset($mensalidade->vencimento) ? $mensalidade->vencimento : '' }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('vencimento'))
                         <span class="help-block">
@@ -32,17 +32,15 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <input type="text" name="status" class="form-control" value="{{ isset($mensalidade->status) ? $mensalidade->status : '' }}">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('status'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('status') }}</strong>
-                        </span>
-                    @endif
+                <div class="form-group">                    
+                    <select name="status" id="status" class="form-control">
+                         @foreach($status as $status)    
+                    <option value="{{ $status->status }}">{{ $status->status }}</option>
+                         @endforeach
+                    </select> 
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('clientes') ? 'has-error' : '' }}">
-                    <input type="text" name="clientes" class="form-control" value="{{ isset($mensalidade->clientes) ? $mensalidade->clientes : '' }}">
+                    <input disabled="disabled" type="text" name="clientes" class="form-control" value="{{ isset($mensalidade->clientes) ? $mensalidade->clientes : '' }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('clientes'))
                         <span class="help-block">

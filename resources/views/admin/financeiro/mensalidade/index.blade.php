@@ -29,7 +29,7 @@
             <th>VENCIMENTO</th>
             <th>STATUS</th>
             <th>CLIENTE</th>
-			    <th width="100px">AÇÕES</th>
+			    <th width="120px">AÇÕES</th>
 	        </tr>
 	    @foreach ($mensalidades as $mensalidade)
 	        <tr>
@@ -41,6 +41,53 @@
                 <td>{{$mensalidade->clientes}}</td>		
 		
         <td class="td-actions text-right">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary btn-sm btn-round btn-icon" data-toggle="modal" data-target="#exampleModal" data-original-title="" title="Gerar Boleto"><i class="fas fa-file-invoice-dollar"></i></button>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Gerar Boleto</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+
+                   
+
+                   
+                <script>
+                        function sl () {
+                            $('#pagseguro_token').val(PagSeguroDirectPayment.getSenderHash())
+                        }
+                </script>
+              
+                <button class="btn btn-success" onclick="sl();">Gerar Token</button><br>
+                
+                <form method="GET" action="{{ route('boleto_action') }}">
+                    <input class="border-0" style="min-width:480px;" type="text" id="pagseguro_token" name="pagseguro_token" value="{{ old('descricao') }}"/><br><br>
+                    <button class="btn btn-info" type="submit" formtarget="_blank">Imprimir</button>
+                </form>
+
+                <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+                
+                <!-- PAGSEGURO-PRODUÇÃO  
+                <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+                -->
+
+                <!-- Sandbox -->
+                <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+                
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- FIM MODAL -->
         <a type="a" href="{{ route('financeiro.mensalidade.editar',$mensalidade->id) }}" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon " data-original-title="" title="Editar Mensalidade">
                           <i class="fas fa-user-edit"></i>
                         </a>    

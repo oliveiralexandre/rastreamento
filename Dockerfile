@@ -27,6 +27,9 @@ RUN apt-get update \
     && docker-php-ext-install gd pdo_mysql mbstring zip exif pcntl \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
+    && docker-php-ext-install mysqli 
+    && docker-php-ext-enable mysqli
+
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

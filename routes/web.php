@@ -44,9 +44,8 @@ Route::prefix('admin')
     Route::get('/financeiro/mensalidade/editar/{id}',['as'=>'financeiro.mensalidade.editar', 'uses'=>'MensalidadeController@editar']);
     Route::post('/financeiro/mensalidade/atualizar/{id}',['as'=>'financeiro.mensalidade.atualizar', 'uses'=>'MensalidadeController@atualizar']);
     Route::get('/financeiro/mensalidade/deletar/{id}',['as'=>'financeiro.mensalidade.deletar', 'uses'=>'MensalidadeController@deletar']);
+    Route::get('/financeiro/mensalidade/boleto_action', 'MensalidadeController@action_boleto')->name('boleto_action');
     
-    
-
 });
 
 

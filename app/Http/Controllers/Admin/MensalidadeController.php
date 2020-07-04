@@ -11,6 +11,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Mensalidade;
 use App\Models\Cliente;
 use App\Models\Status;
+use App\Models\Pedido;
+use PagSeguro;
+use Redirect;
 
 class MensalidadeController extends Controller
 {
@@ -21,14 +24,16 @@ class MensalidadeController extends Controller
     private $cliente;
     private $status;
     private $totalpage = 5;
+    private $pedido;
     
-    public function __construct(Request $request, Mensalidade $mensalidade, Cliente $cliente, Status $status)
+    public function __construct(Request $request, Mensalidade $mensalidade, Cliente $cliente, Status $status, Pedido $pedido)
     {
         $this->request = $request;
         $this->cliente = $cliente;
         $this->mensalidade = $mensalidade;
         $this->status = $status;
         $this->repository = $mensalidade;
+        $this->pedido = $pedido;
     }
 
     public function index(Cliente $cliente, Status $status)
@@ -96,8 +101,9 @@ class MensalidadeController extends Controller
      */
     public function editar($id)
     {
+        $status = DB::table('status')->get();        
         $mensalidade = mensalidade::find($id);
-        return view('admin.financeiro.mensalidade.editar', compact('mensalidade'));
+        return view('admin.financeiro.mensalidade.editar', compact('mensalidade','status'));
     }
 
     public function atualizar(Request $request, $id)
@@ -148,4 +154,46 @@ class MensalidadeController extends Controller
         ]);
     }
 
+    public function action_boleto(Request $r)
+    {  
+        try {
+            $pagseguro = PagSeguro::setReference('1')
+            ->setSenderInfo([
+               'senderName' => 'Nome Completo', //Deve conter nome e sobrenome
+               'senderPhone' => '(32) 1324-1421', //Código de área enviado junto com o telefone
+               'senderEmail' => 'email@email.com',
+               'senderHash' => $r->pagseguro_token,
+               'senderCNPJ' => '98.966.488/0001-00' //Ou CPF se for Pessoa Física
+            ])
+            ->setShippingAddress([
+               'shippingAddressStreet' => 'Rua/Avenida',
+               'shippingAddressNumber' => 'Número',
+               'shippingAddressDistrict' => 'Bairro',
+               'shippingAddressPostalCode' => '12345-678',
+               'shippingAddressCity' => 'Cidade',
+               'shippingAddressState' => 'SP'
+             ])
+             ->setItems([
+              [
+                'itemId' => 'ID',
+                'itemDescription' => 'Nome do Item',
+                'itemAmount' => 12.14, //Valor unitário
+                'itemQuantity' => '1', // Quantidade de itens
+              ],
+            ])
+            ->send([
+              'paymentMethod' => 'boleto'
+            ]);
+        }
+        catch(\Artistas\PagSeguro\PagSeguroException $e) {
+            $e->getCode(); //codigo do erro
+            $e->getMessage(); //mensagem do erro
+        }
+        //$url = "$pagseguro->paymentLink";
+        return Redirect::to($pagseguro->paymentLink);
+    }
+    public function pagseguro()
+    {              
+        return view('admin.financeiro.mensalidade.pagseguro.principal');
+    }
 }

@@ -21,7 +21,7 @@
                     <input type="text" name="valor" class="form-control" value="{{ old('valor') }}" required autofocus
                            placeholder="Valor" >
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('marca'))
+                    @if ($errors->has('valor'))
                         <span class="help-block">
                             <strong>{{ $errors->first('valor') }}</strong>
                         </span>
