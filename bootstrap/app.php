@@ -51,5 +51,20 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+if (! function_exists('debug')) {
+
+    /**
+     * log information quickly, handling string or list
+     *
+     * @param [string] $path
+     *
+     * @return void
+     */
+    function debug($arg)
+    {
+        $str = is_string($arg) ? $arg : var_export($arg, true);
+        Log::debug($str);
+    }
+}
 
 return $app;

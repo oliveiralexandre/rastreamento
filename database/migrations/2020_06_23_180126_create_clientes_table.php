@@ -14,12 +14,26 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->bigIncrements('id');                             
-            $table->string('nome', 50);            
-            $table->string('cpf', 14)->unique();
-            $table->string('telefone', 15)->nullable();
-            $table->string('email', 50);
-            $table->string('endereco', 50); 
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email', 150)->unique();
+            
+            $table->string('cpf')->nullable();
+            
+            $table->string('street')->nullable();            
+            $table->integer('number')->nullable();            
+            $table->string('complement')->nullable();            
+            $table->string('district')->nullable();            
+            $table->integer('postal_code')->nullable();            
+            $table->string('city')->nullable();            
+            $table->string('state')->nullable();            
+            $table->string('country')->nullable();            
+            
+            $table->string('phone', 15)->nullable();            
+            $table->integer('area_code')->nullable();            
+            $table->date('birth_date')->nullable();            
+            
+            $table->rememberToken();
             $table->timestamps();
         });
     }

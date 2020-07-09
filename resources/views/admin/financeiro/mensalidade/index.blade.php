@@ -25,19 +25,19 @@
         <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">              
 	        <tr>
 		        <th>ID</th>
-		        <th>VALOR</th>
             <th>VENCIMENTO</th>
-            <th>STATUS</th>
+            <th>PRODUTO</th>
+            <th>VALOR</th>
             <th>CLIENTE</th>
 			    <th width="120px">AÇÕES</th>
 	        </tr>
 	    @foreach ($mensalidades as $mensalidade)
 	        <tr>
 		        <td>{{$mensalidade->id}}</td>
-		        <td>{{$mensalidade->valor}}</td>
             <td>{{ date( 'd/m/Y' , strtotime($mensalidade->vencimento))}}</td>
            
-                <td>{{$mensalidade->status}}</td>
+                <td>{{$mensalidade->produtos}}</td>
+                <td>{{$mensalidade->valor}}</td>
                 <td>{{$mensalidade->clientes}}</td>		
 		
         <td class="td-actions text-right">
@@ -67,7 +67,9 @@
                 <button class="btn btn-success" onclick="sl();">Gerar Token</button><br>
                 
                 <form method="GET" action="{{ route('boleto_action') }}">
-                    <input class="border-0" style="min-width:480px;" type="text" id="pagseguro_token" name="pagseguro_token" value="{{ old('descricao') }}"/><br><br>
+                    <input class="border-0" style="min-width:480px;" type="text" id="pagseguro_token" name="pagseguro_token" value="{{ old('descricao') }}"/>
+                    
+                    <br><br>
                     <button class="btn btn-info" type="submit" formtarget="_blank">Imprimir</button>
                 </form>
 

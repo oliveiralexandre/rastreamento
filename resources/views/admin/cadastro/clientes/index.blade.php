@@ -29,13 +29,13 @@
             <form action="{{url('/admin/cadastro/clientes/create')}}" method="post">
                 {!! csrf_field() !!}
 
-                <div class="form-group has-feedback {{ $errors->has('nome') ? 'has-error' : '' }}">
-                    <input type="text" name="nome" class="form-control" value="{{ old('nome') }}" required autofocus
+                <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
+                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required autofocus
                            placeholder="Nome" >
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('nome'))
+                    @if ($errors->has('name'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('nome') }}</strong>
+                            <strong>{{ $errors->first('name') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -49,13 +49,13 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('telefone') ? 'has-error' : '' }}">
-                    <input type="text" name="telefone" class="form-control" value="{{ old('telefone') }}" required autofocus
+                <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
+                    <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required autofocus
                            placeholder="Telefone">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('telefone'))
+                    @if ($errors->has('phone'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('telefone') }}</strong>
+                            <strong>{{ $errors->first('phone') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -69,13 +69,13 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('endereco') ? 'has-error' : '' }}">
-                    <input type="text" name="endereco" class="form-control" value="{{ old('endereco') }}" required autofocus
+                <div class="form-group has-feedback {{ $errors->has('street') ? 'has-error' : '' }}">
+                    <input type="text" name="street" class="form-control" value="{{ old('street') }}" required autofocus
                            placeholder="Endereço">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('endereco'))
+                    @if ($errors->has('street'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('endereco') }}</strong>
+                            <strong>{{ $errors->first('street') }}</strong>
                         </span>
                     @endif
                 </div>                            
@@ -114,11 +114,11 @@
 	    @foreach ($clientes as $cliente)
 	        <tr>
 		        <td>{{$cliente->id}}</td>
-		        <td>{{$cliente->nome}}</td>
+		        <td>{{$cliente->name}}</td>
                 <td>{{$cliente->cpf}}</td>
-                <td>{{$cliente->telefone}}</td>
+                <td>{{$cliente->phone}}</td>
                 <td>{{$cliente->email}}</td>
-                <td>{{$cliente->endereco}}</td>
+                <td>{{$cliente->street}}</td>
 		
 		
         <td class="td-actions text-right">

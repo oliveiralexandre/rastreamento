@@ -17,15 +17,12 @@
             <form action="{{url('/admin/financeiro/mensalidade/create')}}" method="post">
                 {!! csrf_field() !!}
 
-                <div class="form-group has-feedback {{ $errors->has('valor') ? 'has-error' : '' }}">
-                    <input type="text" name="valor" class="form-control" value="{{ old('valor') }}" required autofocus
-                           placeholder="Valor" >
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('valor'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('valor') }}</strong>
-                        </span>
-                    @endif
+                <div class="form-group">                    
+                    <select name="valor" id="valor" class="form-control">
+                         @foreach($produtos as $produto)    
+                    <option value="{{ $produto->amount }}">{{ $produto->amount }}</option>
+                         @endforeach
+                    </select> 
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('vencimento') ? 'has-error' : '' }}">
                     <input type="date" name="vencimento" class="form-control" value="{{ old('vencimento') }}" required autofocus
@@ -38,16 +35,16 @@
                     @endif
                 </div>
                 <div class="form-group">                    
-                    <select name="status" id="status" class="form-control">
-                         @foreach($status as $status)    
-                    <option value="{{ $status->status }}">{{ $status->status }}</option>
+                    <select name="produtos" id="produtos" class="form-control">
+                         @foreach($produtos as $produto)    
+                    <option value="{{ $produto->description }}">{{ $produto->description }}</option>
                          @endforeach
                     </select> 
                 </div>
                 <div class="form-group">                    
                     <select name="clientes" id="clientes" class="form-control">
                          @foreach($clientes as $cliente)    
-                    <option value="{{ $cliente->nome }} - {{ $cliente->cpf }}">{{ $cliente->nome }} - {{ $cliente->cpf }}</option>
+                    <option value="{{ $cliente->name }} - {{ $cliente->cpf }}">{{ $cliente->name }} - {{ $cliente->cpf }}</option>
                          @endforeach
                     </select> 
                 </div>

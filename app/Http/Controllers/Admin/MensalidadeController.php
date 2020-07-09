@@ -12,6 +12,7 @@ use App\Models\Mensalidade;
 use App\Models\Cliente;
 use App\Models\Status;
 use App\Models\Pedido;
+use App\Models\Produto;
 use PagSeguro;
 use Redirect;
 
@@ -22,34 +23,34 @@ class MensalidadeController extends Controller
 
     private $mensalidade;
     private $cliente;
-    private $status;
+    private $produto;
     private $totalpage = 5;
-    private $pedido;
+   
     
-    public function __construct(Request $request, Mensalidade $mensalidade, Cliente $cliente, Status $status, Pedido $pedido)
+    public function __construct(Request $request, Mensalidade $mensalidade, Cliente $cliente, Produto $produto)
     {
         $this->request = $request;
         $this->cliente = $cliente;
         $this->mensalidade = $mensalidade;
-        $this->status = $status;
+        $this->produto = $produto;
         $this->repository = $mensalidade;
-        $this->pedido = $pedido;
+        
     }
 
-    public function index(Cliente $cliente, Status $status)
+    public function index(Cliente $cliente, Produto $produto)
     {
         $mensalidades = DB::table('mensalidades')->paginate(5);
         $clientes = DB::table('clientes')->get();
-        $status = DB::table('status')->get();  
+        $produtos = DB::table('produtos')->get();  
               
-        return view('admin.financeiro.mensalidade.index', compact('mensalidades', 'clientes', 'status'));
+        return view('admin.financeiro.mensalidade.index', compact('mensalidades', 'clientes', 'produtos'));
     }
     public function novo()
     {
         $mensalidades = DB::table('mensalidades')->paginate(5);
         $clientes = DB::table('clientes')->get();
-        $status = DB::table('status')->get();        
-        return view('admin.financeiro.mensalidade.novo', compact('mensalidades', 'clientes', 'status'));
+        $produtos = DB::table('produtos')->get();        
+        return view('admin.financeiro.mensalidade.novo', compact('mensalidades', 'clientes', 'produtos'));
     }
     /**
      * Show the form for creating a new resource.
@@ -157,27 +158,30 @@ class MensalidadeController extends Controller
     public function action_boleto(Request $r)
     {  
         try {
+            $cliente = Cliente::findOrFail(1);
+            $produto = Produto::findOrFail(1);
+            debug($cliente->name);
             $pagseguro = PagSeguro::setReference('1')
             ->setSenderInfo([
-               'senderName' => 'Nome Completo', //Deve conter nome e sobrenome
-               'senderPhone' => '(32) 1324-1421', //Código de área enviado junto com o telefone
-               'senderEmail' => 'email@email.com',
+               'senderName' => $cliente->name, //Deve conter nome e sobrenome
+               'senderPhone' => $cliente->phone, //Código de área enviado junto com o telefone
+               'senderEmail' => $cliente->email,
                'senderHash' => $r->pagseguro_token,
-               'senderCNPJ' => '98.966.488/0001-00' //Ou CPF se for Pessoa Física
+               'senderCPF' => $cliente->cpf //Ou CPF se for Pessoa Física
             ])
             ->setShippingAddress([
-               'shippingAddressStreet' => 'Rua/Avenida',
-               'shippingAddressNumber' => 'Número',
-               'shippingAddressDistrict' => 'Bairro',
-               'shippingAddressPostalCode' => '12345-678',
-               'shippingAddressCity' => 'Cidade',
+               'shippingAddressStreet' => $cliente->street,
+               'shippingAddressNumber' => $cliente->number,
+               'shippingAddressDistrict' => $cliente->district,
+               'shippingAddressPostalCode' => $cliente->postal_code,
+               'shippingAddressCity' => $cliente->city,
                'shippingAddressState' => 'SP'
              ])
              ->setItems([
               [
                 'itemId' => 'ID',
-                'itemDescription' => 'Nome do Item',
-                'itemAmount' => 12.14, //Valor unitário
+                'itemDescription' => $produto->description,
+                'itemAmount' => $produto->amount, //Valor unitário
                 'itemQuantity' => '1', // Quantidade de itens
               ],
             ])

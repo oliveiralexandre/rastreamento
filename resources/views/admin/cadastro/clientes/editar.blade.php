@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg bg-primary">
 </nav><div class="container">
  
-<h3>Editar > Cliente ({{$cliente->nome}})</h3>   
+<h3>Editar > Cliente ({{$cliente->name}})</h3>   
   <div class="content">
     <div class="row">
       <div class="col-md-12">
@@ -14,12 +14,12 @@
 		  <form action="{{ route('cadastro.clientes.atualizar',$cliente->id) }}" method="POST">
                 {!! csrf_field() !!}
 
-                <div class="form-group has-feedback {{ $errors->has('nome') ? 'has-error' : '' }}">
-                    <input type="text" name="nome" class="form-control" value="{{ isset($cliente->nome) ? $cliente->nome : '' }}">
+                <div class="form-group has-feedback {{ $errors->has('name') ? 'has-error' : '' }}">
+                    <input type="text" name="name" class="form-control" value="{{ isset($cliente->name) ? $cliente->name : '' }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('nome'))
+                    @if ($errors->has('name'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('nome') }}</strong>
+                            <strong>{{ $errors->first('name') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -32,12 +32,12 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('telefone') ? 'has-error' : '' }}">
-                    <input type="text" name="telefone" class="form-control" value="{{ isset($cliente->telefone) ? $cliente->telefone : '' }}">
+                <div class="form-group has-feedback {{ $errors->has('phone') ? 'has-error' : '' }}">
+                    <input type="text" name="phone" class="form-control" value="{{ isset($cliente->phone) ? $cliente->phone : '' }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('telefone'))
+                    @if ($errors->has('phone'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('telefone') }}</strong>
+                            <strong>{{ $errors->first('phone') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -50,12 +50,12 @@
                         </span>
                     @endif
                 </div>
-                <div class="form-group has-feedback {{ $errors->has('endereco') ? 'has-error' : '' }}">
-                    <input type="text" name="endereco" class="form-control" value="{{ isset($cliente->endereco) ? $cliente->endereco : '' }}">
+                <div class="form-group has-feedback {{ $errors->has('street') ? 'has-error' : '' }}">
+                    <input type="text" name="street" class="form-control" value="{{ isset($cliente->street) ? $cliente->street : '' }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('endereco'))
+                    @if ($errors->has('street'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('endereco') }}</strong>
+                            <strong>{{ $errors->first('street') }}</strong>
                         </span>
                     @endif
                 </div>            

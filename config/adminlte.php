@@ -249,6 +249,11 @@ return [
             'url'  => 'admin/cadastro/veiculos',
             'icon' => 'fas fa-car',
         ],
+        [
+            'text' => 'Produtos',
+            'url'  => 'admin/cadastro/produtos',
+            'icon' => 'fas fa-barcode',
+        ],
         ['header' => '',
         'icon'        => ''],
 
